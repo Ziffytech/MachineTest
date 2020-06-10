@@ -134,17 +134,18 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
     public void registerUserAPISuccessCallback(String response) {
         Log.e("Register response", response);
         try {
-            JSONObject userdata = new JSONObject(response);
-            if (userdata.getInt("responce") == 1) {
-                JSONObject data = userdata.getJSONObject("data");
+
+            JSONObject jsonObject = new JSONObject(response);
+            JSONObject msg = jsonObject.getJSONObject("msg");
+            boolean flag = jsonObject.getBoolean("success");
+            if (flag) {
+                MyUtility.showAlertMessage(RegisterActivity.this, msg.toString());
                 Intent intent = new Intent(RegisterActivity.this, MainActivity.class);
                 intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
                 startActivity(intent);
-
             } else {
-                MyUtility.showAlertMessage(RegisterActivity.this, "Provided email or mobile number is already Registered with us,If you forgotten your password then reset your password.");
+                MyUtility.showAlertMessage(RegisterActivity.this, msg.toString());
             }
-
         } catch (JSONException e) {
             e.printStackTrace();
         }
