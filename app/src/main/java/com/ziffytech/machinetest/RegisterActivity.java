@@ -152,6 +152,7 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
 
     @Override
     public void registerUserAPIFailureCallback(VolleyError error) {
+        MyUtility.showAlertMessage(RegisterActivity.this, error.toString());
     }
 
 }
