@@ -1,3 +1,11 @@
 <resources>
     <string name="app_name">MachineTest</string>
+    <string name="createaccount_yourfirstname">Your name</string>
+    <string name="createaccount_emailaddress">Your Email</string>
+    <string name="counttycode">+91</string>
+    <string name="createaccount_yourlastname">Last Name</string>
+    <string name="password">Password</string>
+    <string name="confirmpass">Confirm Password</string>
+    <string name="msg">Data uploaded succefully</string>
+    <string name="createaccount_address">Your Address</string>
 </resources>

@@ -11,6 +11,7 @@ import com.android.volley.RetryPolicy;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.ziffytech.machinetest.network.interfaces.GetDataListAPICallback;
+import com.ziffytech.machinetest.network.interfaces.RegisterUserAPICallback;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -74,6 +75,56 @@ public class VolleyNetworkUtil {
         } catch (AuthFailureError authFailureError) {
             authFailureError.printStackTrace();
             callback.getDataListAPIFailureCallback(authFailureError);
+        }
+    }
+
+    /**
+     * This method is used for Register User API call.
+     *
+     * @param context    Context for getting volley instance.
+     * @param url        Url for the Register User API
+     * @param params     Parameters to be passed to the API. It is a Map object of String key and value.
+     * @param requestTag The tag associated with the request. It is a String variable.
+     * @param callback   Callback to the class which implements the RegisterUserAPICallback interface.
+     */
+    public static void registerUserAPICall(Context context, String url,
+                                           final Map<String, String> params, String requestTag,
+                                           final RegisterUserAPICallback callback) {
+        try {
+            String authKey = "";
+            final Map<String, String> headers = createHeaders(authKey);
+            StringRequest getAppointmentListRequest = new StringRequest(Request.Method.POST, url,
+                    new Response.Listener<String>() {
+                        @Override
+                        public void onResponse(String response) {
+                            callback.registerUserAPISuccessCallback(response);
+                        }
+                    },
+                    new Response.ErrorListener() {
+                        @Override
+                        public void onErrorResponse(VolleyError error) {
+                            callback.registerUserAPIFailureCallback(error);
+                        }
+                    }
+            ) {
+                @Override
+                protected Map<String, String> getParams() {
+                    return params;
+                }
+
+                @Override
+                public Map<String, String> getHeaders() {
+                    return headers;
+                }
+            };
+
+            int socketTimeout = 10000;//10 seconds - change to what you want
+            RetryPolicy policy = new DefaultRetryPolicy(socketTimeout, DefaultRetryPolicy.DEFAULT_MAX_RETRIES, DefaultRetryPolicy.DEFAULT_BACKOFF_MULT);
+            getAppointmentListRequest.setRetryPolicy(policy);
+            VolleyHelper.getInstance(context).addToRequestQueue(getAppointmentListRequest, requestTag);
+        } catch (AuthFailureError authFailureError) {
+            authFailureError.printStackTrace();
+            callback.registerUserAPIFailureCallback(authFailureError);
         }
     }
 

@@ -14,7 +14,6 @@ import com.ziffytech.machinetest.model.DataListModel;
 import com.ziffytech.machinetest.network.VolleyNetworkUtil;
 import com.ziffytech.machinetest.network.interfaces.GetDataListAPICallback;
 import com.ziffytech.machinetest.network.interfaces.OnClickListenerRecyclerView;
-
 import java.util.ArrayList;
 import java.util.HashMap;
 
